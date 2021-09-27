@@ -8,3 +8,4 @@ the second line
 - файлы с расширением *.tfvars
 - файлы override.tf override.tf.json и файлы содержащие в своем названии и "_override.tf.json" и "_override" с расширением .tf 
 - файлы .terraformrc terraform.rc так же будут проигнорированы
+the third new line

@@ -50,6 +50,143 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl enable node_exporter
 $ sudo systemctl status node_exporter
 
+Тут нашла как конфиг прописать  https://itdraft.ru/2020/11/02/ustanovka-node-exporter-s-avtorizacziej-i-podklyuchenie-k-prometheus-v-centos-8/
+Взяла готовый файл для примера и прописала его в конфиге демона
+
+[Unit]
+Description=Prometheus Node Exporter
+After=network.target
+
+[Service]
+#User=node_exporter
+#Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter --web.config=/opt/node_exporter/web.yml
+
+[Install]
+WantedBy=multi-user.target
+
+Содержимое файла web.yml
+#Если нужно https
+#tls_server_config:
+#  cert_file: node_exporter.crt
+#  key_file: node_exporter.key
+basic_auth_users:
+  myuser: $2y$10$ZNpUythMY9kLqsldfkjsljfdlskjdflksdjf527W8kBkHPT4Rkl9C
+
+Дальше если вносим с какой-то периодичностью изменения в конфиг node_exporter, то демона перезагружаем с помощью таймера
+
+Делаем таймер
+vagrant@vagrant:~$ sudo nano /usr/lib/systemd/system/node_exporter.timer
+
+[Unit]
+Description=Reload after conf edit
+
+[Timer]
+OnCalendar=daily
+AccuracySec=12h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+Результат
+vagrant@vagrant:~$ sudo systemctl status node_exporter.timer
+● node_exporter.timer - Reload after conf edit
+     Loaded: loaded (/lib/systemd/system/node_exporter.timer; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+    Trigger: n/a
+   Triggers: ● node_exporter.service
+
+Спасибо https://habr.com/ru/post/535930/ за таймеры, решение с таймерами гибче и проще чем с cron
+
+2. CPU
+# HELP node_cpu_seconds_total Seconds the CPUs spent in each mode.
+# TYPE node_cpu_seconds_total counter
+node_cpu_seconds_total{cpu="0",mode="idle"} 51889.52
+node_cpu_seconds_total{cpu="0",mode="system"} 12.98
+node_cpu_seconds_total{cpu="0",mode="user"} 13.12
+node_cpu_seconds_total{cpu="1",mode="idle"} 51852.68
+node_cpu_seconds_total{cpu="1",mode="system"} 17.78
+node_cpu_seconds_total{cpu="1",mode="user"} 12.48
+
+Memory
+# HELP node_memory_Active_bytes Memory information field Active_bytes.
+# TYPE node_memory_Active_bytes gauge
+node_memory_Active_bytes 2.36486656e+08
+# HELP node_memory_Cached_bytes Memory information field Cached_bytes.
+# TYPE node_memory_Cached_bytes gauge
+node_memory_Cached_bytes 4.73022464e+08
+# HELP node_memory_HardwareCorrupted_bytes Memory information field HardwareCorrupted_bytes.
+# TYPE node_memory_HardwareCorrupted_bytes gauge
+node_memory_HardwareCorrupted_bytes 0
+# HELP node_memory_MemAvailable_bytes Memory information field MemAvailable_bytes.
+# TYPE node_memory_MemAvailable_bytes gauge
+node_memory_MemAvailable_bytes 7.53442816e+08
+# HELP node_memory_MemFree_bytes Memory information field MemFree_bytes.
+# TYPE node_memory_MemFree_bytes gauge
+node_memory_MemFree_bytes 3.63782144e+08
+# HELP node_memory_MemTotal_bytes Memory information field MemTotal_bytes.
+# TYPE node_memory_MemTotal_bytes gauge
+node_memory_MemTotal_bytes 1.028694016e+09
+
+Disk
+# HELP node_disk_io_time_seconds_total Total seconds spent doing I/Os.
+# TYPE node_disk_io_time_seconds_total counter
+node_disk_io_time_seconds_total{device="dm-0"} 11.700000000000001
+node_disk_io_time_seconds_total{device="dm-1"} 0.048
+node_disk_io_time_seconds_total{device="sda"} 11.824
+
+Network
+# HELP node_network_carrier_down_changes_total carrier_down_changes_total value of /sys/class/net/<iface>.
+# TYPE node_network_carrier_down_changes_total counter
+node_network_carrier_down_changes_total{device="eth0"} 1
+node_network_carrier_down_changes_total{device="lo"} 0
+# HELP node_network_info Non-numeric data from /sys/class/net/<iface>, value is always 1.
+# TYPE node_network_info gauge
+node_network_info{address="00:00:00:00:00:00",broadcast="00:00:00:00:00:00",device="lo",duplex="",ifalias="",operstate="unknown"} 1
+node_network_info{address="08:00:27:73:60:cf",broadcast="ff:ff:ff:ff:ff:ff",device="eth0",duplex="full",ifalias="",operstate="up"} 1
+# HELP node_network_receive_errs_total Network device statistic receive_errs.
+# TYPE node_network_receive_errs_total counter
+node_network_receive_errs_total{device="eth0"} 0
+node_network_receive_errs_total{device="lo"} 0
+
+3. Сделано. Красиво
+
+4. Судя по этой строке  
+ Hypervisor detected: KVM
+ "осознает"
+
+ 5. На моей системе он настроен так
+ vagrant@vagrant:~$ sysctl fs.nr_open
+fs.nr_open = 1048576
+Этот параметр означает лимит на количество открытых файловых дескрипторов
+Лимит так же можно посмотреть с помощью команд
+ulimit -a (мягкая)
+ulimit -aH (жесткая)
+При этом первая выведет open files                      (-n) 1024
+Вторая open files                      (-n) 1048576
+При помощи ulimit можно открутить мягкие ограничения до пределов жестких.
+
+6. root@vagrant:~# nsenter --target 1500 --pid --mount
+root@vagrant:/# ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.4   9836  4044 pts/1    S    16:34   0:00 /bin/bash
+root           9  0.0  0.0   8076   592 pts/1    S+   16:34   0:00 sleep 1h
+root          10  0.1  0.4   9836  4032 pts/2    S    16:37   0:00 -bash
+root          19  0.0  0.3  11492  3312 pts/2    R+   16:37   0:00 ps aux
+
+7. У меня все зависло и ресурсы стали не доступны
+fork бомба, то есть процесс плодящий сам себя в двух экземплярах, пока не кончатся ресурсы.
+В моем случае этот процесс прекратился в контроллере пидов
+[ 2697.999018] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-6.scope
+В общем случае можно установить лимит на количество открытых процессов для пользователя с помощью ulimit -S -u
+Посмотреть лимиты с помощью команд ulimit -u или ulimit -a
+
+
+
+
+
 
 
 

@@ -100,6 +100,8 @@ vagrant@vagrant:~$ sudo systemctl status node_exporter.timer
 
 Спасибо https://habr.com/ru/post/535930/ за таймеры, решение с таймерами гибче и проще чем с cron
 
+P.S. Можно было сделать еще через переменные окружения, файл к которым прописывается в конфиге демона, а не через конфиг к node_exporter
+
 2. CPU
 # HELP node_cpu_seconds_total Seconds the CPUs spent in each mode.
 # TYPE node_cpu_seconds_total counter

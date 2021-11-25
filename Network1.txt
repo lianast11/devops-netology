@@ -1,0 +1,19 @@
+1. HTTP/1.1 301 Moved Permanently
+cache-control: no-cache, no-store, must-revalidate
+location: https://stackoverflow.com/questions
+x-request-guid: a0aaea1b-33ca-44e2-9557-a8c9c36dcaf1
+feature-policy: microphone 'none'; speaker 'none'
+content-security-policy: upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+Accept-Ranges: bytes
+Date: Sun, 21 Nov 2021 17:15:40 GMT
+Via: 1.1 varnish
+Connection: close
+X-Served-By: cache-hhn4044-HHN
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1637514941.608880,VS0,VE170
+Vary: Fastly-SSL
+X-DNS-Prefetch-Control: off
+Set-Cookie: prov=c2ad22b2-e031-4ec1-2177-0be7e346f101; domain=.stackoverflow.com; expires=Fri, 01-Jan-2055 00:00:00 GMT; path=/; HttpOnly
+
+Connection closed by foreign host.

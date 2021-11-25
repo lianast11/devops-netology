@@ -1,3 +1,4 @@
+Отправьте пожалуйста на доработку. Не успеваю до дедлайна.
 1. HTTP/1.1 301 Moved Permanently
 cache-control: no-cache, no-store, must-revalidate
 location: https://stackoverflow.com/questions

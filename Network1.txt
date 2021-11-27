@@ -1,4 +1,4 @@
-Отправьте пожалуйста на доработку. Не успеваю до дедлайна.
+
 1. HTTP/1.1 301 Moved Permanently
 cache-control: no-cache, no-store, must-revalidate
 location: https://stackoverflow.com/questions
@@ -18,3 +18,71 @@ X-DNS-Prefetch-Control: off
 Set-Cookie: prov=c2ad22b2-e031-4ec1-2177-0be7e346f101; domain=.stackoverflow.com; expires=Fri, 01-Jan-2055 00:00:00 GMT; path=/; HttpOnly
 
 Connection closed by foreign host.
+
+Код перенаправления "301 Moved Permanently" протокола передачи гипертекста (HTTP) показывает, что запрошенный ресурс был окончательно перемещён в URL, указанный в заголовке Location (en-US). Браузер в случае такого ответа перенаправляется на эту страницу, а поисковые системы обновляют свои ссылки на ресурс (говоря языком SEO, вес страницы переносится на новый URL-адрес). В данном случае запрос перенаправляется на адрес  https://stackoverflow.com/questions
+
+2. Понять какой был ответ на запрос сложно, так как хром мнгновенно сделал редирект на https://stackoverflow.com с кодом 200
+Скриншот тут https://ibb.co/NpVTYXY
+
+3. 109.124.216.189
+
+4. % Information related to '109.124.192.0/19AS35032'
+
+route:          109.124.192.0/19
+descr:          SamaraLan  AS ROUTE
+origin:         AS35032
+mnt-by:         TAHIONISP-MNT
+created:        2009-11-04T22:33:54Z
+last-modified:  2009-11-04T22:33:54Z
+source:         RIPE
+
+Провайдер - Самаралан
+AS35032
+
+5. На vagrant traceroute не заработал, споткнулся на первом адресе, но мне знакома эта утилита, так что по слайдам с лекции можно будет найти где AS и какие сети используются на компьютере с работающим traceroute
+vagrant@vagrant:~$ traceroute -A 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  _gateway (10.0.2.2) [*]  0.169 ms  0.128 ms  0.099 ms
+ 2  * * *
+ 3  * * *
+ 4  * * *
+ 5  * * *
+ 6  * * *
+ 7  * * *
+ 8  * * *
+
+ 6.  При этом mtr работает                                                                  Packets               Pings
+ Host                                                            Loss%   Snt   Last   Avg  Best  Wrst StDev  1. _gateway                                                      0.0%    91    1.3   1.2   0.2   2.2   0.3  2. XiaoQiang                                                     0.0%    91    1.7   2.2   1.0   4.4   0.6  3. p161-106.samaralan.ru                                         0.0%    91    2.5   2.6   1.2   7.0   0.7  4. p161-205.samaralan.ru                                         0.0%    91    2.5   2.9   1.3  13.3   1.5  5. p160-102.samaralan.ru                                         0.0%    91    2.7   3.6   1.7  35.4   3.8  6. google.inet2.ru                                               0.0%    91   15.4  17.6  14.1 169.0  16.2  7. 108.170.250.83                                               15.4%    91   19.0  19.5  16.8  59.7   5.9  8. 142.251.71.194                                               41.8%    91   50.8  33.3  31.5  50.8   2.8  9. 108.170.232.251                                               0.0%    91   30.8  30.7  29.0  35.7   0.9 10. 172.253.51.243                                                0.0%    91   33.4  34.4  32.2  86.5   5.6 11. (waiting for reply)
+12. (waiting for reply)
+13. (waiting for reply)
+14. (waiting for reply)
+15. (waiting for reply)
+16. (waiting for reply)
+17. (waiting for reply)
+18. (waiting for reply)
+19. (waiting for reply)
+20. dns.google                                                   15.6%    90   31.9  32.0  30.9  34.9   0.5 
+Наибольшая задержка на маршрутизаторе с адресом 142.251.71.194
+
+7. ДНС сервера
+dns.google.             10800   IN      NS      ns4.zdns.google.
+dns.google.             10800   IN      NS      ns1.zdns.google.
+dns.google.             10800   IN      NS      ns3.zdns.google.
+dns.google.             10800   IN      NS      ns2.zdns.google.
+
+А записи
+dns.google.             900     IN      A       8.8.4.4
+dns.google.             900     IN      A       8.8.8.8
+
+8. ;; ANSWER SECTION:
+8.8.8.8.in-addr.arpa.   47413   IN      PTR     dns.google.
+;; ANSWER SECTION:
+4.4.8.8.in-addr.arpa.   1611    IN      PTR     dns.google.
+
+
+
+
+
+
+
+

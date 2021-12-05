@@ -1,0 +1,309 @@
+1. Сделано  скриншот тут https://ibb.co/GM5C9Fn
+Лично я использую Keepass2 - это менеджер паролей с открытым исходным кодом. Довольно надежный, про взломы не было информации пока.
+
+2. Настроено скриншот тут https://ibb.co/PT55FNk 
+
+3. Настроено
+vagrant@vagrant:~$ sudo apt install apache2
+vagrant@vagrant:~$ sudo a2enmod ssl
+vagrant@vagrant:~$ sudo systemctl restart apache2
+vagrant@vagrant:~$ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \-keyout /etc/ssl/private/apache-selfsigned.key \-out /etc/ssl/certs/apache-selfsigned.crt \-subj "/C=RU/ST=Samara/L=Samara/O=Company Name/OU=Org/CN=symposium-elite.xyz"
+vagrant@vagrant:~$ sudo nano /etc/apache2/sites-available/symposium-elite.xyz.conf
+<VirtualHost *:443>
+   ServerName symposium-elite.xyz
+   DocumentRoot /var/www/symposium-elite
+   SSLEngine on
+   SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+   SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+</VirtualHost>
+vagrant@vagrant:~$ sudo mkdir /var/www/symposium-elite
+vagrant@vagrant:~$ sudo nano /var/www/symposium-elite/index.html
+<h1>it worked!</h1>
+vagrant@vagrant:~$ sudo a2ensite symposium-elite.xyz.conf
+vagrant@vagrant:~$ sudo apache2ctl configtest
+vagrant@vagrant:~$ sudo systemctl reload apache2
+vagrant@vagrant:~$ sudo nano /etc/hosts
+127.0.0.1       symposium-elite.xyz
+vagrant@vagrant:~$ sudo apt install links
+vagrant@vagrant:~$ links https://symposium-elite.xyz
+
+скриншот вывода сайта тут https://ibb.co/ZK6P7xm
+
+4. vagrant@vagrant:~$ git clone --depth 1 https://github.com/drwetter/testssl.sh.git
+vagrant@vagrant:~$ cd testssl.sh
+vagrant@vagrant:~/testssl.sh$ ./testssl.sh -e --fast --parallel https://yandex.ru
+###########################################################
+    testssl.sh       3.1dev from https://testssl.sh/dev/
+    (f6571c7 2021-11-30 11:19:44 -- )
+
+      This program is free software. Distribution and
+             modification under GPLv2 permitted.
+      USAGE w/o ANY WARRANTY. USE IT AT YOUR OWN RISK!
+
+       Please file bugs @ https://testssl.sh/bugs/
+
+###########################################################
+
+ Using "OpenSSL 1.0.2-chacha (1.0.2k-dev)" [~183 ciphers]
+ on vagrant:./bin/openssl.Linux.x86_64
+ (built: "Jan 18 17:12:17 2019", platform: "linux-x86_64")
+
+
+Testing all IPv4 addresses (port 443): 5.255.255.55 77.88.55.80 5.255.255.77 77.88.55.60
+--------------------------------------------------------------------------------
+ Start 2021-12-05 16:03:16        -->> 5.255.255.55:443 (yandex.ru) <<--
+
+ Further IP addresses:   77.88.55.60 5.255.255.77 77.88.55.80 2a02:6b8:a::a
+ rDNS (5.255.255.55):    yandex.ru.
+ Service detected:       HTTP
+
+
+
+ Testing all 183 locally available ciphers against the server, ordered by encryption strength
+
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+ xc030   ECDHE-RSA-AES256-GCM-SHA384       ECDH 256   AESGCM      256      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+
+ xc02c   ECDHE-ECDSA-AES256-GCM-SHA384     ECDH 256   AESGCM      256      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+
+ xc02f   ECDHE-RSA-AES128-GCM-SHA256       ECDH 256   AESGCM      128      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+ xc02b   ECDHE-ECDSA-AES128-GCM-SHA256     ECDH 256   AESGCM      128      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+
+ xc027   ECDHE-RSA-AES128-SHA256           ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+ xc023   ECDHE-ECDSA-AES128-SHA256         ECDH 256   AES         128      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+
+ xc013   ECDHE-RSA-AES128-SHA              ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+
+ x9c     AES128-GCM-SHA256                 RSA        AESGCM      128      TLS_RSA_WITH_AES_128_GCM_SHA256
+
+ x3c     AES128-SHA256                     RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA256
+
+ x2f     AES128-SHA                        RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA
+
+ x0a     DES-CBC3-SHA                      RSA        3DES        168      TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+
+
+ Done 2021-12-05 16:03:23 [  11s] -->> 5.255.255.55:443 (yandex.ru) <<--
+
+--------------------------------------------------------------------------------
+ Start 2021-12-05 16:03:23        -->> 77.88.55.80:443 (yandex.ru) <<--
+
+ Further IP addresses:   77.88.55.60 5.255.255.77 5.255.255.55 2a02:6b8:a::a
+ rDNS (77.88.55.80):     yandex.ru.
+ Service detected:       HTTP
+
+
+
+ Testing all 183 locally available ciphers against the server, ordered by encryption strength
+
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+ xc030   ECDHE-RSA-AES256-GCM-SHA384       ECDH 256   AESGCM      256      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+
+ xc02c   ECDHE-ECDSA-AES256-GCM-SHA384     ECDH 256   AESGCM      256      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+
+ xc02f   ECDHE-RSA-AES128-GCM-SHA256       ECDH 256   AESGCM      128      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+ xc02b   ECDHE-ECDSA-AES128-GCM-SHA256     ECDH 256   AESGCM      128      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+
+ xc027   ECDHE-RSA-AES128-SHA256           ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+ xc023   ECDHE-ECDSA-AES128-SHA256         ECDH 256   AES         128      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+
+ xc013   ECDHE-RSA-AES128-SHA              ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+
+ x9c     AES128-GCM-SHA256                 RSA        AESGCM      128      TLS_RSA_WITH_AES_128_GCM_SHA256
+
+ x3c     AES128-SHA256                     RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA256
+
+ x2f     AES128-SHA                        RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA
+
+ x0a     DES-CBC3-SHA                      RSA        3DES        168      TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+
+
+ Done 2021-12-05 16:03:30 [  18s] -->> 77.88.55.80:443 (yandex.ru) <<--
+
+--------------------------------------------------------------------------------
+ Start 2021-12-05 16:03:30        -->> 5.255.255.77:443 (yandex.ru) <<--
+
+ Further IP addresses:   77.88.55.60 77.88.55.80 5.255.255.55 2a02:6b8:a::a
+ rDNS (5.255.255.77):    yandex.ru.
+ Service detected:       HTTP
+
+
+
+ Testing all 183 locally available ciphers against the server, ordered by encryption strength
+
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+ xc030   ECDHE-RSA-AES256-GCM-SHA384       ECDH 256   AESGCM      256      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+
+ xc02c   ECDHE-ECDSA-AES256-GCM-SHA384     ECDH 256   AESGCM      256      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+
+ xc02f   ECDHE-RSA-AES128-GCM-SHA256       ECDH 256   AESGCM      128      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+ xc02b   ECDHE-ECDSA-AES128-GCM-SHA256     ECDH 256   AESGCM      128      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+
+ xc027   ECDHE-RSA-AES128-SHA256           ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+ xc023   ECDHE-ECDSA-AES128-SHA256         ECDH 256   AES         128      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+
+ xc013   ECDHE-RSA-AES128-SHA              ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+
+ x9c     AES128-GCM-SHA256                 RSA        AESGCM      128      TLS_RSA_WITH_AES_128_GCM_SHA256
+
+ x3c     AES128-SHA256                     RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA256
+
+ x2f     AES128-SHA                        RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA
+
+ x0a     DES-CBC3-SHA                      RSA        3DES        168      TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+
+
+ Done 2021-12-05 16:03:37 [  25s] -->> 5.255.255.77:443 (yandex.ru) <<--
+
+--------------------------------------------------------------------------------
+ Start 2021-12-05 16:03:37        -->> 77.88.55.60:443 (yandex.ru) <<--
+
+ Further IP addresses:   5.255.255.77 77.88.55.80 5.255.255.55 2a02:6b8:a::a
+ rDNS (77.88.55.60):     yandex.ru.
+ Service detected:       HTTP
+
+
+
+ Testing all 183 locally available ciphers against the server, ordered by encryption strength
+
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+ xc030   ECDHE-RSA-AES256-GCM-SHA384       ECDH 256   AESGCM      256      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+
+ xc02c   ECDHE-ECDSA-AES256-GCM-SHA384     ECDH 256   AESGCM      256      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+
+ xc02f   ECDHE-RSA-AES128-GCM-SHA256       ECDH 256   AESGCM      128      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+
+ xc02b   ECDHE-ECDSA-AES128-GCM-SHA256     ECDH 256   AESGCM      128      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+
+ xc027   ECDHE-RSA-AES128-SHA256           ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+
+ xc023   ECDHE-ECDSA-AES128-SHA256         ECDH 256   AES         128      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+
+ xc013   ECDHE-RSA-AES128-SHA              ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+
+ x9c     AES128-GCM-SHA256                 RSA        AESGCM      128      TLS_RSA_WITH_AES_128_GCM_SHA256
+
+ x3c     AES128-SHA256                     RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA256
+
+ x2f     AES128-SHA                        RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA
+
+ x0a     DES-CBC3-SHA                      RSA        3DES        168      TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+
+
+ Done 2021-12-05 16:03:44 [  32s] -->> 77.88.55.60:443 (yandex.ru) <<--
+
+--------------------------------------------------------------------------------
+Done testing now all IP addresses (on port 443): 5.255.255.55 77.88.55.80 5.255.255.77 77.88.55.60
+
+5. openssh-server уже был установлен в рамках занятий по компьютерным сетям (настройка eve), так что далее просто делаем ключик и подключаемся 
+user@ubuntu:~$ ssh-keygen
+user@ubuntu:~$ ssh-copy-id user@192.168.255.11
+user@ubuntu:~$ ssh user@192.168.255.11
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun 05 Dec 2021 04:49:24 PM UTC
+
+  System load:  0.02              Processes:             119
+  Usage of /:   51.2% of 8.79GB   Users logged in:       1
+  Memory usage: 20%               IPv4 address for ens3: 192.168.255.11
+  Swap usage:   0%
+
+ * Super-optimized for small spaces - read how we shrank the memory
+   footprint of MicroK8s to make it the smallest full K8s around.
+
+   https://ubuntu.com/blog/microk8s-memory-optimisation
+
+40 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Sun Dec  5 16:48:21 2021 from 192.168.255.10
+user@ubuntu2:~$
+
+6. user@ubuntu:~$ cd .ssh/
+user@ubuntu:~/.ssh$ mv id_rsa id_rsa_ubuntu2
+user@ubuntu:~/.ssh$ nano config
+Host ubuntu2
+  HostName 192.168.255.11
+  IdentityFile ~/.ssh/id_rsa_ubuntu2
+  User user
+  Port 22
+
+user@ubuntu:~/.ssh$ ssh ubuntu2
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun 05 Dec 2021 05:19:45 PM UTC
+
+  System load:  0.0               Processes:             118
+  Usage of /:   51.2% of 8.79GB   Users logged in:       1
+  Memory usage: 20%               IPv4 address for ens3: 192.168.255.11
+  Swap usage:   0%
+
+ * Super-optimized for small spaces - read how we shrank the memory
+   footprint of MicroK8s to make it the smallest full K8s around.
+
+   https://ubuntu.com/blog/microk8s-memory-optimisation
+
+40 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Sun Dec  5 17:17:26 2021 from 192.168.255.10
+user@ubuntu2:~$
+
+
+7. vagrant@vagrant:~/testssl.sh$ sudo apt install tcpdump
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+tcpdump is already the newest version (4.9.3-4).
+0 upgraded, 0 newly installed, 0 to remove and 105 not upgraded.
+vagrant@vagrant:~/testssl.sh$ tcpdump -D
+1.eth0 [Up, Running]
+2.dummy0 [Up, Running]
+3.lo [Up, Running, Loopback]
+4.any (Pseudo-device that captures on all interfaces) [Up, Running]
+5.bluetooth-monitor (Bluetooth Linux Monitor) [none]
+6.nflog (Linux netfilter log (NFLOG) interface) [none]
+7.nfqueue (Linux netfilter queue (NFQUEUE) interface) [none]
+
+vagrant@vagrant:~/testssl.sh$ cd ~
+vagrant@vagrant:~$ sudo tcpdump -w 0001.pcap -i eth0 -c 100
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+100 packets captured
+120 packets received by filter
+0 packets dropped by kernel
+
+Скриншот WireShark тут https://ibb.co/cXGCvf3
+
+
+
+
+
+

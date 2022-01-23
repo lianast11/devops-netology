@@ -73,12 +73,12 @@ done
 ```bash
 #! /usr/bin/env bash
 array_hosts=( 192.168.0.1 173.194.222.113 87.250.250.242 )
-for times in {1..5}
+while (($? ==0))
 do
 date >> log
 for host in ${array_hosts[@]}
 do
-curl $host:80
+curl --connect-timeout 5 $host:80
 if (($? !=0))
 then
 echo $host >> error

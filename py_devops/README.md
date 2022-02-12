@@ -42,7 +42,8 @@ for result in result_os.split('\n'):
 ```
 
 ### Ваш скрипт:
-```#!/usr/bin/env python3
+```python
+#!/usr/bin/env python3
 
 import os
 
@@ -71,12 +72,35 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+import sys
+
+pwd = os.getcwd()
+
+if len(sys.argv) >= 2:
+    pwd = sys.argv[1]
+bash_command = ["cd "+pwd, "git status 2>&1"]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+for result in result_os.split('\n'):
+    if result.find('fatal') != -1:
+        print('is not a local repository')
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified: ', '')
+        print(pwd+prepare_result)
+#       break
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\user\AppData\Local\Programs\Python\Python39\python.exe D:/Git/devops-netology/py_devops/1.py
+D:\Git\devops-netology\py_devops  1.py
+D:\Git\devops-netology\py_devops  README.md
+если не локальный репозиторий:
+C:/Users/user/AppData/Local/Programs/Python/Python39/python.exe D:/Git/devops-netology/py_devops/1.py
+is not a local repository
 ```
 
 ## Обязательная задача 4
@@ -84,12 +108,35 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import socket
+import time
+import datetime
+
+i = 1
+times = 5
+gservices = {'drive.google.com': '192.168.33.1', 'mail.google.com': '192.168.33.2', 'google.com': '192.168.33.3'}
+init = 0
+
+while 1 != 0:
+    for host in gservices:
+        ip = socket.gethostbyname(host)
+        if ip != gservices[host]:
+            if i == 1 and init != 1:
+                print(str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) +'[ERROR]' + str(host) +' IP mistmatch:'+gservices[host]+' '+ip)
+            gservices[host] = ip
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+C:\Users\user\AppData\Local\Programs\Python\Python39\python.exe D:/Git/devops-netology/py_devops/1.py
+2022-02-12 19:43:54[ERROR]drive.google.com IP mistmatch:192.168.33.1 142.251.1.194
+2022-02-12 19:43:54[ERROR]mail.google.com IP mistmatch:192.168.33.2 64.233.161.19
+2022-02-12 19:43:54[ERROR]google.com IP mistmatch:192.168.33.3 64.233.162.102
+2022-02-12 19:44:55[ERROR]mail.google.com IP mistmatch:64.233.161.19 64.233.162.17
+2022-02-12 19:45:01[ERROR]drive.google.com IP mistmatch:142.251.1.194 173.194.222.194
+2022-02-12 19:46:06[ERROR]mail.google.com IP mistmatch:64.233.162.17 64.233.162.83
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению

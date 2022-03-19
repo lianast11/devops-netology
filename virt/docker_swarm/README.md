@@ -25,10 +25,9 @@ Overlay (Оверлей) — оверлейные сети соединяют в
  
  # Задача 2.
 
- https://dropmefiles.com/JWYqX
+ ![test](https://dropmefiles.com/JWYqX)
 
  # Задача 3.
 
- https://dropmefiles.com/SnA3t
-
+ ![test2](https://dropmefiles.com/SnA3t)
  

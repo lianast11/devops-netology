@@ -25,9 +25,13 @@ Overlay (Оверлей) — оверлейные сети соединяют в
  
  # Задача 2.
 
- ![](https://ibb.co/PMcqF7C)  
+ <p align="center">
+  <img width="1200" height="600" src="./assets/task2.png">
+</p> 
 
  # Задача 3.
 
- ![](https://ibb.co/3hBc0nL)  
+ <p align="center">
+  <img width="1200" height="600" src="./assets/task3.png">
+</p>  
  

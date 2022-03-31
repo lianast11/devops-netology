@@ -32,6 +32,6 @@ Overlay (Оверлей) — оверлейные сети соединяют в
  # Задача 3.
 
  <p align="center">
-  <img width="660" height="598" src="./assets/task3.png">
+  <img width="1660" height="598" src="./assets/task3.png">
 </p>  
  

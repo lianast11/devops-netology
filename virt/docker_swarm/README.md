@@ -26,12 +26,12 @@ Overlay (Оверлей) — оверлейные сети соединяют в
  # Задача 2.
 
  <p align="center">
-  <img width="1200" height="600" src="./assets/task2.png">
+  <img width="1598" height="376" src="./assets/task2.png">
 </p> 
 
  # Задача 3.
 
  <p align="center">
-  <img width="1200" height="600" src="./assets/task3.png">
+  <img width="660" height="598" src="./assets/task3.png">
 </p>  
  

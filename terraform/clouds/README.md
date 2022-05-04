@@ -1,5 +1,5 @@
 Задача 1. В виде результата задания приложите вывод команды aws configure list  
-lianast11@Liudmilas-MBP ~ % aws configure list
+    lianast11@Liudmilas-MBP ~ % aws configure list
       Name                    Value             Type    Location
       ----                    -----             ----    --------
    profile                <not set>             None    None

@@ -1,0 +1,29 @@
+# server.yaml
+repos:
+- id: github.com/lianast11/virt-homeworks
+# With just allowed_overrides: [workflow], repos can only
+  # choose workflows defined server-side.
+  allowed_overrides: [workflow]
+
+  # allowed_workflows specifies which workflows the repos that match 
+  # are allowed to select.
+  allowed_workflows: [custom]
+  
+  # By setting allow_custom_workflows to true, we allow repos to also
+  # define their own workflows.
+  allow_custom_workflows: true
+  
+  # workflows lists server-side custom workflows
+  workflows:
+    custom:
+      plan:
+        steps:
+        - run: my-custom-command arg1 arg2
+        - init
+        - plan:
+          extra_args: ["-lock", "false"]
+        - run: my-custom-command arg1 arg2
+      apply:
+        steps:
+        - run: echo hi
+        - apply

@@ -6,4 +6,5 @@
 [server.yaml](https://github.com/lianast11/devops-netology/blob/main/terraform/command_work/server.yaml) [atlantis.yaml](https://github.com/lianast11/devops-netology/blob/main/terraform/command_work/atlantis.yaml)  
 
 Задача 3. Модули  
+[main.tf](https://github.com/lianast11/devops-netology/blob/main/terraform/command_work/main.tf)  
 

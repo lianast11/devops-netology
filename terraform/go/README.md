@@ -32,42 +32,42 @@ package main
 
 x := []int{48,96,86,68,57,82,63,70,37,34,83,27,19,97,9,17,}
 
-package main
+    package main
 
-import "fmt"
+    import "fmt"
 
-func main() {
+    func main() {
 
-    x := []int{48, 96, 86, 68, 57, 82, 63, 70, 37, 34, 83, 27, 19, 97, 9, 17}
+        x := []int{48, 96, 86, 68, 57, 82, 63, 70, 37, 34, 83, 27, 19, 97, 9, 17}
 
-    mini := x[0]
+        mini := x[0]
 
-    length := len(x)
+        length := len(x)
 
-        for i := 0; i<length; i = i+1 {
+            for i := 0; i<length; i = i+1 {
 
-              if x[i] < mini {
-              mini = x[i]
-              }
-        }
-    fmt.Println(mini)
-} 
+                if x[i] < mini {
+                mini = x[i]
+                }
+            }
+        fmt.Println(mini)
+    } 
 
 3. Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть (3, 6, 9, …).
-package main
+    package main
 
-import "fmt"
+    import "fmt"
 
-func Details ()(Numbers []int) {
-	for i := 1;  i <= 100; i ++ {
-		if	i % 3 == 0 { 
-			Numbers = append(Numbers, i)
-		}
-	}	
-	return
-}
+    func Details ()(Numbers []int) {
+	    for i := 1;  i <= 100; i ++ {
+		    if	i % 3 == 0 { 
+			    Numbers = append(Numbers, i)
+		    }
+	    }	
+	    return
+    }
 
-func main() {
-	toPrint := Details()
-	fmt.Printf("Numbers: %v\n", toPrint)
-}
+    func main() {
+	    toPrint := Details()
+	    fmt.Printf("Numbers: %v\n", toPrint)
+    }

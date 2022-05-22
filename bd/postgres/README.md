@@ -20,15 +20,6 @@ psql -h localhost -p 5432 -U postgres -W
 вывода списка БД  
 ~~~
 postgres-# \l
-                                 List of databases
-   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
------------+----------+----------+------------+------------+-----------------------
- postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
- template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
- template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
-(3 rows)
 ~~~
 подключения к БД  
 ~~~
@@ -38,15 +29,16 @@ Password:
 ~~~
 вывода списка таблиц postgres  
 ~~
-postgres-# \dtS
-         
+postgres-# \dtS        
 ~~~
+
 вывода описания содержимого таблиц  
 ~~~
 postgres-# \d[S+] NAME
 postgres-# \dS+ pg_index
 ~~~
 выхода из psql  
+
 ~~~
 postgres-# \q
 ~~~
@@ -60,6 +52,7 @@ postgres-# \q
 Подключитесь к восстановленной БД и проведите операцию ANALYZE для сбора статистики по таблице.  
 Используя таблицу pg_stats, найдите столбец таблицы orders с наибольшим средним значением размера элементов в байтах.  
 Приведите в ответе команду, которую вы использовали для вычисления и полученный результат.  
+
 ~~~
 postgres=# CREATE DATABASE test_database;
 CREATE DATABASE
@@ -89,17 +82,21 @@ test_database=# select avg_width from pg_stats where tablename='orders';
          4
 (3 rows)
 ~~~
+
 Задача 3.  
 Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и поиск по ней занимает долгое время. Вам, как успешному выпускнику курсов DevOps в нетологии предложили провести разбиение таблицы на 2 (шардировать на orders_1 - price>499 и orders_2 - price<=499).  
 Предложите SQL-транзакцию для проведения данной операции.  
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?  
+
 ~~~
 CREATE TABLE public.orders_1 (LIKE public.orders);
 CREATE TABLE public.orders_2 (LIKE public.orders);
 insert into orders_1 (id,title,price) select * from orders where price > 499;
 insert into orders_2 (id,title,price) select * from orders where price <= 499;
 ~~~
+
 Или так:  
+
 ~~~
 CREATE TABLE orders_1 (CHECK ( price > 499 )) INHERITS (orders);
 CREATE TABLE orders_2 (CHECK ( price <= 499 )) INHERITS (orders);
@@ -126,15 +123,19 @@ CREATE TRIGGER insert_orders_price_trigger
     BEFORE INSERT ON orders
     FOR EACH ROW EXECUTE PROCEDURE orders_insert_trigger();
 ~~~
+
 Можно было исключить "ручное" разбиение если заранее использовать для price MINVALUE и MAXVALUE.  
 
 Задача 4.  
 Используя утилиту pg_dump создайте бекап БД test_database.  
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца title для таблиц test_database?  
+
 ~~~
 root@bd54a0eg7b93:/var/lib/postgresql/data# pg_dump -U postgres -d test_database >test_database_dump.sql
 ~~~
+
 Для уникальности нужно добавить индекс.  
+
 ~~~
 CREATE INDEX ON orders ((lower(title)));
 ~~~

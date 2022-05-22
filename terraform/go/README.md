@@ -54,20 +54,22 @@ x := []int{48,96,86,68,57,82,63,70,37,34,83,27,19,97,9,17,}
     } 
 
 3. Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть (3, 6, 9, …).
+   
     package main
 
-import "fmt"
+    import "fmt"
 
-func FilterList ()(devidedWithNoReminder []int) {
-	for i := 1;  i <= 100; i ++ {
-		if	i % 3 == 0 { 
-			devidedWithNoReminder = append(devidedWithNoReminder, i)
-		}
-	}	
-	return
-}
+    func Details ()(List []int) {
+	    for i := 1;  i <= 100; i ++ {
+		    if	i % 3 == 0 { 
+			    List = append(List, i)
+		    }
+	    }	
+	    return
+    }
 
-func main() {
-	toPrint := FilterList()
-	fmt.Printf("Числа от 1 до 100, которые делятся на 3 без остатка: %v\n", toPrint)
-}
+    func main() {
+	    toPrint := Details()
+	    fmt.Printf("Numbers: %v\n", toPrint)
+    }
+    

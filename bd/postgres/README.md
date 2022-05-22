@@ -28,7 +28,7 @@ postgres-# \l
 подключения к БД  
 
 ~~~
-- \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}  
+\c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}  
 postgres-# \c postgres
 Password: 
 ~~~

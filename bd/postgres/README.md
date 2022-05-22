@@ -10,6 +10,7 @@
 вывода списка таблиц  
 вывода описания содержимого таблиц  
 выхода из psql  
+
 ~~~
 docker pull postgres:13
 docker volume create vol_postgres
@@ -17,26 +18,34 @@ docker run --rm --name pg-docker -e POSTGRES_PASSWORD=postgres -ti -p 5432:5432 
 docker exec -it pg-docker bash
 psql -h localhost -p 5432 -U postgres -W
 ~~~
+
 вывода списка БД  
+
 ~~~
 postgres-# \l
 ~~~
+
 подключения к БД  
+
 ~~~
 - \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}  
 postgres-# \c postgres
 Password: 
 ~~~
+
 вывода списка таблиц postgres  
+
 ~~
 postgres-# \dtS        
 ~~~
 
 вывода описания содержимого таблиц  
+
 ~~~
 postgres-# \d[S+] NAME
 postgres-# \dS+ pg_index
 ~~~
+
 выхода из psql  
 
 ~~~

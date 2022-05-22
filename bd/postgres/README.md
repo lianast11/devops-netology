@@ -35,7 +35,7 @@ Password:
 
 вывода списка таблиц postgres  
 
-~~
+~~~
 postgres-# \dtS        
 ~~~
 

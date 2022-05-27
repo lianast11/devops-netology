@@ -144,7 +144,11 @@ root@bd54a0eg7b93:/var/lib/postgresql/data# pg_dump -U postgres -d test_database
 ~~~
 
 Для уникальности нужно добавить индекс.  
+Доработка.  
+Действительно, была неправа. Индекс или primery key не гарантирует уникальность значений. Нужно использовать Unique Constraints вместо Primery Key. Тогда при попытке вставить значение которое уже есть в столбце, PostgreSQL выдаст ошибку.   
 
 ~~~
-CREATE INDEX ON orders ((lower(title)));
+ALTER TABLE order
+ADD CONSTRAINT unique_title
+UNIQUE(title);
 ~~~
